@@ -1,195 +1,124 @@
-// Weekly To-Do web app
-// Stores data in localStorage keyed by calendar date (YYYY-MM-DD).
+const moodCards = document.querySelectorAll('.mood-card');
+const moodResponse = document.getElementById('mood-response');
+const scrollButtons = document.querySelectorAll('[data-scroll]');
+const messageBtn = document.getElementById('message-btn');
+const wishBtn = document.getElementById('wish-btn');
+const surpriseMessage = document.getElementById('surprise-message');
+const loveButton = document.getElementById('love-button');
+const loveCount = document.getElementById('love-count');
+const burstLayer = document.getElementById('burst-layer');
 
-const STORAGE_KEY = 'weekly_todo_data_v1';
+let loveTotal = 0;
+let surpriseTimeout;
 
-let currentMonday = getMonday(new Date());
-let tasksByDate = loadFromStorage();
+const wishNotes = [
+  'Wish granted: endless forehead kisses queued and on their way.',
+  'The universe just texted back. It said you are its favorite daydream.',
+  'Fate is busy arranging candlelight clouds for you right now.',
+  'Consider this wish wrapped in velvet skies and shooting stars.'
+];
 
-document.addEventListener('DOMContentLoaded', () => {
-  setupControls();
-  setupDayForms();
-  refreshWeek();
+const revealSurprise = (text) => {
+  if (!surpriseMessage) return;
+  surpriseMessage.textContent = text;
+  surpriseMessage.classList.add('is-visible');
+  clearTimeout(surpriseTimeout);
+  surpriseTimeout = setTimeout(() => {
+    surpriseMessage.classList.remove('is-visible');
+  }, 5200);
+};
+
+scrollButtons.forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    const target = btn.getAttribute('data-scroll');
+    if (!target) return;
+    event.preventDefault();
+    document.querySelector(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 });
 
-function setupControls() {
-  document.getElementById('prev-week').addEventListener('click', () => {
-    currentMonday = addDays(currentMonday, -7);
-    refreshWeek();
-  });
-
-  document.getElementById('next-week').addEventListener('click', () => {
-    currentMonday = addDays(currentMonday, 7);
-    refreshWeek();
-  });
-
-  document.getElementById('this-week').addEventListener('click', () => {
-    currentMonday = getMonday(new Date());
-    refreshWeek();
-  });
-}
-
-function setupDayForms() {
-  const dayColumns = document.querySelectorAll('.day-column');
-
-  dayColumns.forEach((column) => {
-    const dayIndex = parseInt(column.dataset.dayIndex, 10);
-    const form = column.querySelector('.task-form');
-    const input = column.querySelector('.task-input');
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const text = input.value.trim();
-      if (!text) return;
-
-      const date = addDays(currentMonday, dayIndex);
-      const dateKey = toDateKey(date);
-      if (!tasksByDate[dateKey]) {
-        tasksByDate[dateKey] = [];
-      }
-      tasksByDate[dateKey].push({
-        text,
-        completed: false
-      });
-      saveToStorage();
-      input.value = '';
-      refreshDay(dayIndex);
-    });
-  });
-}
-
-// ---- Week / day rendering ----
-
-function refreshWeek() {
-  updateWeekLabel();
-  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
-    refreshDay(dayIndex);
-  }
-}
-
-function refreshDay(dayIndex) {
-  const date = addDays(currentMonday, dayIndex);
-  const dateKey = toDateKey(date);
-  const column = document.querySelector(`.day-column[data-day-index="${dayIndex}"]`);
-  if (!column) return;
-
-  // Update date label
-  const dateLabel = column.querySelector('[data-role="date-label"]');
-  dateLabel.textContent = formatShortDate(date);
-
-  // Render tasks
-  const listEl = column.querySelector('.task-list');
-  listEl.innerHTML = '';
-
-  const tasks = tasksByDate[dateKey] || [];
-  tasks.forEach((task, index) => {
-    const li = document.createElement('li');
-    if (task.completed) {
-      li.classList.add('completed');
+moodCards.forEach((card) => {
+  card.addEventListener('click', () => {
+    moodCards.forEach((item) => item.classList.remove('active'));
+    card.classList.add('active');
+    const message = card.dataset.message;
+    if (message && moodResponse) {
+      moodResponse.textContent = message;
     }
-
-    const label = document.createElement('span');
-    label.textContent = task.text;
-    label.className = 'task-label';
-
-    // Toggle complete on click
-    label.addEventListener('click', () => {
-      tasksByDate[dateKey][index].completed = !tasksByDate[dateKey][index].completed;
-      saveToStorage();
-      refreshDay(dayIndex);
-    });
-
-    const deleteBtn = document.createElement('button');
-    deleteBtn.type = 'button';
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.setAttribute('aria-label', 'Delete task');
-    deleteBtn.textContent = '✕';
-    deleteBtn.addEventListener('click', () => {
-      tasksByDate[dateKey].splice(index, 1);
-      if (tasksByDate[dateKey].length === 0) {
-        delete tasksByDate[dateKey];
-      }
-      saveToStorage();
-      refreshDay(dayIndex);
-    });
-
-    li.appendChild(label);
-    li.appendChild(deleteBtn);
-    listEl.appendChild(li);
+    spawnBurst(card.getBoundingClientRect());
   });
-}
+});
 
-function updateWeekLabel() {
-  const labelEl = document.getElementById('week-label');
-  const monday = currentMonday;
-  const sunday = addDays(monday, 6);
+messageBtn?.addEventListener('click', () => {
+  revealSurprise('I hope you rested today. If not, you can rest inside my arms.');
+});
 
-  const { week, year } = getISOWeek(monday);
+wishBtn?.addEventListener('click', () => {
+  const text = wishNotes[Math.floor(Math.random() * wishNotes.length)];
+  revealSurprise(text);
+});
 
-  const text = `Week ${week}, ${year} · ${formatLongDate(monday)} – ${formatLongDate(sunday)}`;
-  labelEl.textContent = text;
-}
-
-// ---- Date helpers ----
-
-function getMonday(date) {
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  const day = d.getDay(); // 0 (Sun) - 6 (Sat)
-  const diff = (day === 0 ? -6 : 1) - day; // shift so that Monday is first
-  d.setDate(d.getDate() + diff);
-  return d;
-}
-
-function addDays(date, days) {
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  d.setDate(d.getDate() + days);
-  return d;
-}
-
-function toDateKey(date) {
-  return date.toISOString().slice(0, 10);
-}
-
-function formatShortDate(date) {
-  const options = { month: 'short', day: 'numeric' };
-  return date.toLocaleDateString(undefined, options);
-}
-
-function formatLongDate(date) {
-  const options = { month: 'short', day: 'numeric', year: 'numeric' };
-  return date.toLocaleDateString(undefined, options);
-}
-
-// ISO week number algorithm
-function getISOWeek(date) {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  // Thursday in current week decides the year
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-  return { week: weekNo, year: d.getUTCFullYear() };
-}
-
-// ---- Storage helpers ----
-
-function loadFromStorage() {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === 'object') {
-      return parsed;
-    }
-  } catch (err) {
-    console.warn('Failed to load tasks from localStorage:', err);
+loveButton?.addEventListener('click', (event) => {
+  loveTotal += Math.floor(Math.random() * 7) + 3;
+  if (loveCount) {
+    loveCount.textContent = loveTotal.toString();
   }
-  return {};
+  const bounds = event.currentTarget.getBoundingClientRect();
+  spawnBurst(bounds);
+});
+
+function spawnBurst(bounds) {
+  if (!burstLayer || !bounds) return;
+  const count = 10;
+  for (let i = 0; i < count; i += 1) {
+    const heart = document.createElement('span');
+    const x = bounds.left + bounds.width / 2 + randomBetween(-60, 60);
+    const y = bounds.top + bounds.height / 2 + randomBetween(-40, 40);
+    heart.style.left = `${x}px`;
+    heart.style.top = `${y}px`;
+    heart.style.animationDuration = `${randomBetween(1500, 2400)}ms`;
+    heart.style.transform = `translate(-50%, -50%) scale(${randomBetween(80, 140) / 100})`;
+    burstLayer.appendChild(heart);
+    setTimeout(() => heart.remove(), 2200);
+  }
 }
 
-function saveToStorage() {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(tasksByDate));
-  } catch (err) {
-    console.warn('Failed to save tasks to localStorage:', err);
-  }
+function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Cursor-driven tilt for the hero card and general parallax mood.
+document.addEventListener('pointermove', (event) => {
+  const { clientX, clientY } = event;
+  const centerX = window.innerWidth / 2;
+  const centerY = window.innerHeight / 2;
+  const offsetX = ((clientX - centerX) / centerX) * 8;
+  const offsetY = ((clientY - centerY) / centerY) * 8;
+  document.documentElement.style.setProperty('--tilt-x', `${offsetY}deg`);
+  document.documentElement.style.setProperty('--tilt-y', `${offsetX}deg`);
+});
+
+const polaroids = document.querySelectorAll('.polaroid-grid figure');
+polaroids.forEach((figure) => {
+  const computed = window.getComputedStyle(figure).transform;
+  figure.dataset.initial = computed === 'none' ? '' : computed;
+  figure.addEventListener('mouseenter', () => {
+    figure.style.transition = 'transform 0.4s ease';
+    const base = figure.dataset.initial && figure.dataset.initial !== 'none' ? figure.dataset.initial : '';
+    figure.style.transform = `${base} translateY(-8px)`;
+  });
+  figure.addEventListener('mouseleave', () => {
+    figure.style.transition = 'transform 0.4s ease';
+    figure.style.transform = figure.dataset.initial && figure.dataset.initial !== 'none' ? figure.dataset.initial : '';
+  });
+});
+
+const heroCard = document.querySelector('.hero-card');
+if (heroCard) {
+  setInterval(() => {
+    heroCard.style.setProperty(
+      'transform',
+      'rotate3d(1, 0, 0, var(--tilt-x, 0deg)) rotate3d(0, 1, 0, var(--tilt-y, 0deg)) translateY(0)'
+    );
+  }, 120);
 }

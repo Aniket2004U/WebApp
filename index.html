@@ -2,127 +2,197 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Weekly To-Do</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hey Love, How Are You?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="top-bar">
-      <div class="brand">
-        <h1>Weekly To-Do</h1>
-        <p class="tagline">Plan your week, one day at a time.</p>
-      </div>
-      <div class="week-controls">
-        <button id="prev-week" class="btn btn-secondary">&larr; Previous week</button>
-        <button id="this-week" class="btn">This week</button>
-        <button id="next-week" class="btn btn-secondary">Next week &rarr;</button>
-      </div>
-    </header>
+  <div class="floating-hearts" aria-hidden="true">
+    <span style="--i:1"></span>
+    <span style="--i:2"></span>
+    <span style="--i:3"></span>
+    <span style="--i:4"></span>
+    <span style="--i:5"></span>
+    <span style="--i:6"></span>
+    <span style="--i:7"></span>
+    <span style="--i:8"></span>
+    <span style="--i:9"></span>
+    <span style="--i:10"></span>
+    <span style="--i:11"></span>
+    <span style="--i:12"></span>
+  </div>
+  <div class="stardust" aria-hidden="true"></div>
 
-    <section class="week-header">
-      <p id="week-label" class="week-label"></p>
+  <header class="hero" id="top">
+    <div class="hero-content">
+      <p class="eyebrow">My sweetest love,</p>
+      <h1>How are you tonight?</h1>
+      <p class="intro">
+        Just dropping by to make sure your heart feels light, to ask if you are well,
+        and to remind you that I love you more than the moon loves the tide.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" data-scroll="#mood">Tell me how you feel</button>
+        <button class="btn btn-ghost" id="message-btn">Show a secret</button>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-glow"></div>
+      <div class="card-inner">
+        <p>Checklist before sleep:</p>
+        <ul>
+          <li>Are you smiling? <span>working on it</span></li>
+          <li>Have you drunk water? <span>please do</span></li>
+          <li>Do you know I love you? <span>always</span></li>
+        </ul>
+        <p class="signature">Forever yours, me &hearts;</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section mood-check" id="mood">
+      <div class="section-header">
+        <p class="eyebrow">Check-in time</p>
+        <h2>Pick the mood that fits right now</h2>
+        <p>Tap a card so I can wrap you in the perfect words.</p>
+      </div>
+      <div class="mood-grid">
+        <button class="mood-card" data-message="You glow like a sunrise, and I hope you keep sharing that light with me forever.">
+          <h3>Glowing</h3>
+          <p>Feeling magical and unstoppable.</p>
+        </button>
+        <button class="mood-card" data-message="I'm sending a million hugs instantly. Lean on my love and breathe slow with me.">
+          <h3>Need a cuddle</h3>
+          <p>I need extra softness today.</p>
+        </button>
+        <button class="mood-card" data-message="I see you doing your best. Let's slow down tonight and celebrate tiny wins together.">
+          <h3>A bit tired</h3>
+          <p>Energy is low but my heart is full.</p>
+        </button>
+        <button class="mood-card" data-message="Close your eyes, feel my heartbeat, and know I'm right there whispering I love you.">
+          <h3>Missing you</h3>
+          <p>I want you here with me now.</p>
+        </button>
+      </div>
+      <div class="mood-response" id="mood-response">
+        I'm listening with my whole heart. Tell me everything.
+      </div>
     </section>
 
-    <main>
-      <section id="days-grid" class="days-grid">
-        <!-- Monday -->
-        <article class="day-column" data-day-index="0">
-          <header class="day-header">
-            <div class="day-name">Monday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Monday..." aria-label="Add Monday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
+    <section class="section wellness">
+      <div class="wellness-card">
+        <div class="badge">Little wellness ritual</div>
+        <h2>Are you okay, love?</h2>
+        <p>
+          Check these tiny boxes for me and let me ease anything that feels heavy. You deserve soft evenings and warm laughter.
+        </p>
+        <ul class="glow-list">
+          <li>
+            <span>Breathing easy?</span>
+            <small>Inhale four, exhale six. I'm doing it with you.</small>
+          </li>
+          <li>
+            <span>Body comfy?</span>
+            <small>Stretch, curl up in blankets, or steal my hoodie.</small>
+          </li>
+          <li>
+            <span>Heart calm?</span>
+            <small>If not, lean closer. I'll hold the storm back.</small>
+          </li>
+        </ul>
+      </div>
+      <div class="timeline">
+        <h3>Tonight's dream plan</h3>
+        <div class="timeline-steps">
+          <article>
+            <span class="step-number">01</span>
+            <h4>Tea + slow song</h4>
+            <p>Press play, sway with me virtually, let the world melt.</p>
+          </article>
+          <article>
+            <span class="step-number">02</span>
+            <h4>Shared wishes</h4>
+            <p>Message me a feeling, I'll reply with poetry in seconds.</p>
+          </article>
+          <article>
+            <span class="step-number">03</span>
+            <h4>Grateful whispers</h4>
+            <p>We'll list three tiny joys and fall asleep smiling.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <!-- Tuesday -->
-        <article class="day-column" data-day-index="1">
-          <header class="day-header">
-            <div class="day-name">Tuesday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Tuesday..." aria-label="Add Tuesday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
+    <section class="section polaroids">
+      <div class="section-header">
+        <p class="eyebrow">Little daydreams</p>
+        <h2>Snapshots of us (and the future)</h2>
+      </div>
+      <div class="polaroid-grid">
+        <figure>
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" alt="Golden hour skies" />
+          <figcaption>Golden hour promises</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Cozy mug" />
+          <figcaption>Tea dates forever</figcaption>
+        </figure>
+        <figure>
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Stars" />
+          <figcaption>Counting stars with you</figcaption>
+        </figure>
+      </div>
+    </section>
 
-        <!-- Wednesday -->
-        <article class="day-column" data-day-index="2">
-          <header class="day-header">
-            <div class="day-name">Wednesday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Wednesday..." aria-label="Add Wednesday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
+    <section class="section love-note" id="love-note">
+      <div class="note">
+        <p class="eyebrow">Mini love letter</p>
+        <h2>Hi baby, I love you</h2>
+        <p>
+          I hope you're feeling safe and adored. If not, I will flood your inbox, your day, your dreams with softness until you do. You are the best part of every story I tell.
+        </p>
+        <button class="btn btn-secondary" id="love-button">Send endless love</button>
+      </div>
+      <div class="counter">
+        <p>Heartbeats dispatched</p>
+        <span id="love-count">0</span>
+      </div>
+    </section>
 
-        <!-- Thursday -->
-        <article class="day-column" data-day-index="3">
-          <header class="day-header">
-            <div class="day-name">Thursday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Thursday..." aria-label="Add Thursday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
+    <section class="section promise">
+      <h2>Reasons I adore you on loop</h2>
+      <div class="promise-cloud">
+        <span>Kindest soul</span>
+        <span>Beautiful laugh</span>
+        <span>Starlit eyes</span>
+        <span>Smart + fiery</span>
+        <span>My calm</span>
+        <span>Adventure buddy</span>
+        <span>Cozy cuddler</span>
+        <span>Dream confidant</span>
+      </div>
+      <div class="cta-row">
+        <button class="btn btn-primary" data-scroll="#top">Take me to the top</button>
+        <button class="btn btn-ghost" id="wish-btn">Make a wish</button>
+      </div>
+    </section>
+  </main>
 
-        <!-- Friday -->
-        <article class="day-column" data-day-index="4">
-          <header class="day-header">
-            <div class="day-name">Friday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Friday..." aria-label="Add Friday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
+  <footer class="footer">
+    <p>
+      Built with stardust, soft playlists, and endless love. Ask me anything, anytime.
+    </p>
+  </footer>
 
-        <!-- Saturday -->
-        <article class="day-column" data-day-index="5">
-          <header class="day-header">
-            <div class="day-name">Saturday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Saturday..." aria-label="Add Saturday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
-
-        <!-- Sunday -->
-        <article class="day-column" data-day-index="6">
-          <header class="day-header">
-            <div class="day-name">Sunday</div>
-            <div class="day-date" data-role="date-label"></div>
-          </header>
-          <ul class="task-list"></ul>
-          <form class="task-form">
-            <input type="text" class="task-input" placeholder="Add a task for Sunday..." aria-label="Add Sunday task" />
-            <button type="submit" class="btn btn-small">Add</button>
-          </form>
-        </article>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <small>Stored locally in your browser &middot; You can safely use this with GitHub Pages.</small>
-    </footer>
+  <div class="surprise-message" id="surprise-message" role="status" aria-live="polite">
+    <p>You are my favorite human. Drink water, stretch, and know I'm proud of you.</p>
   </div>
+
+  <div class="burst-layer" id="burst-layer" aria-hidden="true"></div>
 
   <script src="scripts/app.js"></script>
 </body>
