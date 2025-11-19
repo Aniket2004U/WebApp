@@ -1,21 +1,28 @@
-const moodCards = document.querySelectorAll('.mood-card');
-const moodResponse = document.getElementById('mood-response');
+const capabilityCards = document.querySelectorAll('.mood-card');
+const capabilityResponse = document.getElementById('skill-response');
 const scrollButtons = document.querySelectorAll('[data-scroll]');
-const messageBtn = document.getElementById('message-btn');
-const wishBtn = document.getElementById('wish-btn');
+const statusBtn = document.getElementById('message-btn');
+const chatBtn = document.getElementById('wish-btn');
 const surpriseMessage = document.getElementById('surprise-message');
-const loveButton = document.getElementById('love-button');
-const loveCount = document.getElementById('love-count');
+const metricButton = document.getElementById('metric-button');
+const metricCount = document.getElementById('metric-count');
 const burstLayer = document.getElementById('burst-layer');
 
-let loveTotal = 0;
+let metricTotal = 0;
 let surpriseTimeout;
 
-const wishNotes = [
-  'Wish granted: endless forehead kisses queued and on their way.',
-  'The universe just texted back. It said you are its favorite daydream.',
-  'Fate is busy arranging candlelight clouds for you right now.',
-  'Consider this wish wrapped in velvet skies and shooting stars.'
+const chatNotes = [
+  'Shipping a SmartNIC prototype that parses FIX in programmable logic.',
+  'Currently profiling BRAM usage on a 25G feed handler demo.',
+  'Sketching a multi-clock design for a risk-check FPGA service.',
+  'Running regression sims with cocotb + Questa this evening.'
+];
+
+const availabilityNotes = [
+  'Spinning up lab time and available for collaborations next week.',
+  'In research mode but open for exploratory chats after 6pm GMT.',
+  'Bench is warm and I can take on part-time design reviews now.',
+  'Lab booked for latency benchmarks; happy to sync between runs.'
 ];
 
 const revealSurprise = (text) => {
@@ -37,31 +44,32 @@ scrollButtons.forEach((btn) => {
   });
 });
 
-moodCards.forEach((card) => {
+capabilityCards.forEach((card) => {
   card.addEventListener('click', () => {
-    moodCards.forEach((item) => item.classList.remove('active'));
+    capabilityCards.forEach((item) => item.classList.remove('active'));
     card.classList.add('active');
     const message = card.dataset.message;
-    if (message && moodResponse) {
-      moodResponse.textContent = message;
+    if (message && capabilityResponse) {
+      capabilityResponse.textContent = message;
     }
     spawnBurst(card.getBoundingClientRect());
   });
 });
 
-messageBtn?.addEventListener('click', () => {
-  revealSurprise('I hope you rested today. If not, you can rest inside my arms.');
-});
-
-wishBtn?.addEventListener('click', () => {
-  const text = wishNotes[Math.floor(Math.random() * wishNotes.length)];
+statusBtn?.addEventListener('click', () => {
+  const text = availabilityNotes[Math.floor(Math.random() * availabilityNotes.length)];
   revealSurprise(text);
 });
 
-loveButton?.addEventListener('click', (event) => {
-  loveTotal += Math.floor(Math.random() * 7) + 3;
-  if (loveCount) {
-    loveCount.textContent = loveTotal.toString();
+chatBtn?.addEventListener('click', () => {
+  const text = chatNotes[Math.floor(Math.random() * chatNotes.length)];
+  revealSurprise(text);
+});
+
+metricButton?.addEventListener('click', (event) => {
+  metricTotal += Math.floor(Math.random() * 7) + 3;
+  if (metricCount) {
+    metricCount.textContent = metricTotal.toString();
   }
   const bounds = event.currentTarget.getBoundingClientRect();
   spawnBurst(bounds);
@@ -87,8 +95,13 @@ function randomBetween(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Cursor-driven tilt for the hero card and general parallax mood.
-document.addEventListener('pointermove', (event) => {
+// Cursor-driven tilt for devices with fine pointers, disabled on touch screens.
+const heroCard = document.querySelector('.hero-card');
+const pointerFineQuery = window.matchMedia('(pointer: fine)');
+let tiltEnabled = false;
+let heroCardInterval;
+
+const handlePointerMove = (event) => {
   const { clientX, clientY } = event;
   const centerX = window.innerWidth / 2;
   const centerY = window.innerHeight / 2;
@@ -96,10 +109,57 @@ document.addEventListener('pointermove', (event) => {
   const offsetY = ((clientY - centerY) / centerY) * 8;
   document.documentElement.style.setProperty('--tilt-x', `${offsetY}deg`);
   document.documentElement.style.setProperty('--tilt-y', `${offsetX}deg`);
-});
+};
 
-const polaroids = document.querySelectorAll('.polaroid-grid figure');
-polaroids.forEach((figure) => {
+const enableTiltEffects = () => {
+  if (tiltEnabled) return;
+  tiltEnabled = true;
+  document.addEventListener('pointermove', handlePointerMove);
+  if (heroCard && !heroCardInterval) {
+    heroCardInterval = setInterval(() => {
+      heroCard.style.setProperty(
+        'transform',
+        'rotate3d(1, 0, 0, var(--tilt-x, 0deg)) rotate3d(0, 1, 0, var(--tilt-y, 0deg)) translateY(0)'
+      );
+    }, 120);
+  }
+};
+
+const disableTiltEffects = () => {
+  if (!tiltEnabled) return;
+  tiltEnabled = false;
+  document.removeEventListener('pointermove', handlePointerMove);
+  if (heroCardInterval) {
+    clearInterval(heroCardInterval);
+    heroCardInterval = null;
+  }
+  if (heroCard) {
+    heroCard.style.removeProperty('transform');
+  }
+};
+
+const handlePointerPreferenceChange = (event) => {
+  if (event.matches) {
+    enableTiltEffects();
+  } else {
+    disableTiltEffects();
+  }
+};
+
+if (pointerFineQuery.matches) {
+  enableTiltEffects();
+} else {
+  disableTiltEffects();
+}
+
+if (typeof pointerFineQuery.addEventListener === 'function') {
+  pointerFineQuery.addEventListener('change', handlePointerPreferenceChange);
+} else if (typeof pointerFineQuery.addListener === 'function') {
+  pointerFineQuery.addListener(handlePointerPreferenceChange);
+}
+
+const projectShots = document.querySelectorAll('.polaroid-grid figure');
+projectShots.forEach((figure) => {
   const computed = window.getComputedStyle(figure).transform;
   figure.dataset.initial = computed === 'none' ? '' : computed;
   figure.addEventListener('mouseenter', () => {
@@ -112,13 +172,3 @@ polaroids.forEach((figure) => {
     figure.style.transform = figure.dataset.initial && figure.dataset.initial !== 'none' ? figure.dataset.initial : '';
   });
 });
-
-const heroCard = document.querySelector('.hero-card');
-if (heroCard) {
-  setInterval(() => {
-    heroCard.style.setProperty(
-      'transform',
-      'rotate3d(1, 0, 0, var(--tilt-x, 0deg)) rotate3d(0, 1, 0, var(--tilt-y, 0deg)) translateY(0)'
-    );
-  }, 120);
-}
