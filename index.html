@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hey Love, How Are You?</title>
+  <title>Hardware & FPGA Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -28,168 +28,174 @@
 
   <header class="hero" id="top">
     <div class="hero-content">
-      <p class="eyebrow">My sweetest love,</p>
-      <h1>How are you tonight?</h1>
+      <p class="eyebrow">Aspiring hardware / FPGA engineer</p>
+      <h1>Deterministic hardware for latency-critical systems</h1>
       <p class="intro">
-        Just dropping by to make sure your heart feels light, to ask if you are well,
-        and to remind you that I love you more than the moon loves the tide.
+        I build high-confidence digital systems: FPGA fabrics, embedded control loops, smart-NIC acceleration, and
+        SystemVerilog/C++ pipelines optimized for sub-microsecond trading flows. From board bring-up to FIX gateways,
+        I obsess over signal integrity, tooling, and observability.
       </p>
       <div class="hero-buttons">
-        <button class="btn btn-primary" data-scroll="#mood">Tell me how you feel</button>
-        <button class="btn btn-ghost" id="message-btn">Show a secret</button>
+        <button class="btn btn-primary" data-scroll="#skills">Explore capabilities</button>
+        <button class="btn btn-ghost" id="message-btn">Availability ping</button>
       </div>
     </div>
     <div class="hero-card">
       <div class="card-glow"></div>
       <div class="card-inner">
-        <p>Checklist before sleep:</p>
+        <p>Quick telemetry</p>
         <ul>
-          <li>Are you smiling? <span>working on it</span></li>
-          <li>Have you drunk water? <span>please do</span></li>
-          <li>Do you know I love you? <span>always</span></li>
+          <li>Focus areas <span>FPGA fabrics / SmartNIC</span></li>
+          <li>Current build <span>UltraScale+ low-latency feed</span></li>
+          <li>Response time <span>&lt; 1 business day</span></li>
         </ul>
-        <p class="signature">Forever yours, me &hearts;</p>
+        <p class="signature">Let's co-design the pipeline.</p>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="section mood-check" id="mood">
+    <section class="section mood-check" id="skills">
       <div class="section-header">
-        <p class="eyebrow">Check-in time</p>
-        <h2>Pick the mood that fits right now</h2>
-        <p>Tap a card so I can wrap you in the perfect words.</p>
+        <p class="eyebrow">Capabilities</p>
+        <h2>Where I create leverage</h2>
+        <p>Select a track to see how I approach it.</p>
       </div>
       <div class="mood-grid">
-        <button class="mood-card" data-message="You glow like a sunrise, and I hope you keep sharing that light with me forever.">
-          <h3>Glowing</h3>
-          <p>Feeling magical and unstoppable.</p>
+        <button class="mood-card" data-message="From RTL to on-board bring-up, I map data-plane micro-architectures into DSP blocks, BRAM, and custom pipelines tuned for deterministic latency.">
+          <h3>FPGA + SystemVerilog</h3>
+          <p>Low-latency fabrics, CDC strategy, multi-clock SoCs.</p>
         </button>
-        <button class="mood-card" data-message="I'm sending a million hugs instantly. Lean on my love and breathe slow with me.">
-          <h3>Need a cuddle</h3>
-          <p>I need extra softness today.</p>
+        <button class="mood-card" data-message="Tight C/C++ firmware with direct register manipulation, DMA choreography, and real-time diagnostics for Cortex-M / RISC-V targets.">
+          <h3>Embedded control</h3>
+          <p>Microcontroller firmware, bootloaders, HAL design.</p>
         </button>
-        <button class="mood-card" data-message="I see you doing your best. Let's slow down tonight and celebrate tiny wins together.">
-          <h3>A bit tired</h3>
-          <p>Energy is low but my heart is full.</p>
+        <button class="mood-card" data-message="C++17, templates, lock-free queues, SIMD tuning, and continuous profiling to keep host orchestration in sync with hardware.">
+          <h3>Systems software</h3>
+          <p>C / C++ / Rust glue for tools, tests, host stacks.</p>
         </button>
-        <button class="mood-card" data-message="Close your eyes, feel my heartbeat, and know I'm right there whispering I love you.">
-          <h3>Missing you</h3>
-          <p>I want you here with me now.</p>
+        <button class="mood-card" data-message="Feed handlers, FIX parser blocks, timestamping, and SmartNIC offload paths for HFT desks that measure wins in nanoseconds.">
+          <h3>Trading infrastructure</h3>
+          <p>FPGA SmartNIC + FIX hardware acceleration.</p>
         </button>
       </div>
-      <div class="mood-response" id="mood-response">
-        I'm listening with my whole heart. Tell me everything.
+      <div class="mood-response" id="skill-response">
+        Tap a capability to see my approach.
       </div>
     </section>
 
-    <section class="section wellness">
+    <section class="section wellness" id="pillars">
       <div class="wellness-card">
-        <div class="badge">Little wellness ritual</div>
-        <h2>Are you okay, love?</h2>
+        <div class="badge">Design pillars</div>
+        <h2>Signal-first thinking</h2>
         <p>
-          Check these tiny boxes for me and let me ease anything that feels heavy. You deserve soft evenings and warm laughter.
+          Every build starts with budgets: clocks, power, routing, verification closure, and instrumentation that makes
+          deterministic systems debuggable.
         </p>
         <ul class="glow-list">
           <li>
-            <span>Breathing easy?</span>
-            <small>Inhale four, exhale six. I'm doing it with you.</small>
+            <span>Hardware/software co-design</span>
+            <small>Partitioning functionality across FPGA fabric, firmware, and host services.</small>
           </li>
           <li>
-            <span>Body comfy?</span>
-            <small>Stretch, curl up in blankets, or steal my hoodie.</small>
+            <span>Deterministic latency</span>
+            <small>Careful CDC, timing reports, and link-level instrumentation.</small>
           </li>
           <li>
-            <span>Heart calm?</span>
-            <small>If not, lean closer. I'll hold the storm back.</small>
+            <span>Observability + tooling</span>
+            <small>Python/C++ harnesses, on-chip analyzers, CI-friendly testbenches.</small>
           </li>
         </ul>
       </div>
       <div class="timeline">
-        <h3>Tonight's dream plan</h3>
+        <h3>Build loop</h3>
         <div class="timeline-steps">
           <article>
             <span class="step-number">01</span>
-            <h4>Tea + slow song</h4>
-            <p>Press play, sway with me virtually, let the world melt.</p>
+            <h4>Model & simulate</h4>
+            <p>Capture specs, SystemVerilog TBs, cocotb/questa runs, trace instrumentation.</p>
           </article>
           <article>
             <span class="step-number">02</span>
-            <h4>Shared wishes</h4>
-            <p>Message me a feeling, I'll reply with poetry in seconds.</p>
+            <h4>Prototype & measure</h4>
+            <p>Bring-up on dev boards, microbenchmarks, python notebooks for latency reports.</p>
           </article>
           <article>
             <span class="step-number">03</span>
-            <h4>Grateful whispers</h4>
-            <p>We'll list three tiny joys and fall asleep smiling.</p>
+            <h4>Iterate & harden</h4>
+            <p>Floorplanning, CDC review, firmware polish, documentation, and roll-out.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section polaroids">
+    <section class="section polaroids" id="projects">
       <div class="section-header">
-        <p class="eyebrow">Little daydreams</p>
-        <h2>Snapshots of us (and the future)</h2>
+        <p class="eyebrow">Selected snapshots</p>
+        <h2>Projects & experiments</h2>
       </div>
       <div class="polaroid-grid">
         <figure>
-          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80" alt="Golden hour skies" />
-          <figcaption>Golden hour promises</figcaption>
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80" alt="FPGA board" />
+          <figcaption>SmartNIC packet shaper</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Cozy mug" />
-          <figcaption>Tea dates forever</figcaption>
+          <img src="https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=600&q=80" alt="Oscilloscope and board" />
+          <figcaption>Deterministic clock lab</figcaption>
         </figure>
         <figure>
-          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80" alt="Stars" />
-          <figcaption>Counting stars with you</figcaption>
+          <img src="https://images.unsplash.com/photo-1517430816045-df4b7de1d487?auto=format&fit=crop&w=600&q=80" alt="Code on screen" />
+          <figcaption>FIX gateway microservices</figcaption>
         </figure>
       </div>
     </section>
 
-    <section class="section love-note" id="love-note">
+    <section class="section love-note" id="lab">
       <div class="note">
-        <p class="eyebrow">Mini love letter</p>
-        <h2>Hi baby, I love you</h2>
+        <p class="eyebrow">Latency lab</p>
+        <h2>Instrumentation + research playground</h2>
         <p>
-          I hope you're feeling safe and adored. If not, I will flood your inbox, your day, your dreams with softness until you do. You are the best part of every story I tell.
+          I keep a standing lab of replay harnesses, PTP-enabled switches, and FPGA dev boards to validate ideas fast.
+          Want to explore a concept or benchmark a path? Tap below and let's simulate the burst together.
         </p>
-        <button class="btn btn-secondary" id="love-button">Send endless love</button>
+        <button class="btn btn-secondary" id="metric-button">Simulate packet burst</button>
       </div>
       <div class="counter">
-        <p>Heartbeats dispatched</p>
-        <span id="love-count">0</span>
+        <p>Experiments triggered</p>
+        <span id="metric-count">0</span>
       </div>
     </section>
 
-    <section class="section promise">
-      <h2>Reasons I adore you on loop</h2>
+    <section class="section promise" id="toolbox">
+      <h2>Toolbox & languages I lean on</h2>
       <div class="promise-cloud">
-        <span>Kindest soul</span>
-        <span>Beautiful laugh</span>
-        <span>Starlit eyes</span>
-        <span>Smart + fiery</span>
-        <span>My calm</span>
-        <span>Adventure buddy</span>
-        <span>Cozy cuddler</span>
-        <span>Dream confidant</span>
+        <span>SystemVerilog</span>
+        <span>Verilog/VHDL</span>
+        <span>Python (cocotb)</span>
+        <span>C / C++</span>
+        <span>Rust (tools)</span>
+        <span>Vivado / Quartus</span>
+        <span>SmartNIC SDKs</span>
+        <span>FIX / PTP</span>
+        <span>Git + CI</span>
+        <span>Linux bring-up</span>
       </div>
       <div class="cta-row">
-        <button class="btn btn-primary" data-scroll="#top">Take me to the top</button>
-        <button class="btn btn-ghost" id="wish-btn">Make a wish</button>
+        <button class="btn btn-primary" data-scroll="#projects">See selected work</button>
+        <button class="btn btn-ghost" id="wish-btn">Start a build chat</button>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <p>
-      Built with stardust, soft playlists, and endless love. Ask me anything, anytime.
+      Open to internships, research collaborations, and latency-focused hardware/software gigs. Drop a note and I'll send
+      over a deeper project breakdown.
     </p>
   </footer>
 
   <div class="surprise-message" id="surprise-message" role="status" aria-live="polite">
-    <p>You are my favorite human. Drink water, stretch, and know I'm proud of you.</p>
+    Checking lab availability...
   </div>
 
   <div class="burst-layer" id="burst-layer" aria-hidden="true"></div>
